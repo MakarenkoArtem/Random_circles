@@ -4,18 +4,16 @@ from random import *
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow
+from UI import Ui_Form
 
-class MyWidget(QMainWindow):
+
+class MyWidget(QMainWindow, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.do_paint = False
         self.el = []
         self.pushButton.clicked.connect(self.paint)
-
-    def paint(self):
-        self.do_paint = True
-        self.repaint()
 
     def paintEvent(self, event):
         if self.do_paint:
@@ -23,6 +21,10 @@ class MyWidget(QMainWindow):
             qp.begin(self)
             self.draw_flag(qp)
             qp.end()
+
+    def paint(self):
+        self.do_paint = True
+        self.repaint()
 
     def draw_flag(self, qp):
         qp.setBrush(QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
